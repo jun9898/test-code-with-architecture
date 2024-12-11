@@ -48,6 +48,16 @@ class PostControllerTest {
 	}
 
 	@Test
+	void 사용자가_존재하지_않는_게시물을_조회할_경우_에러가난다() throws Exception {
+		//given
+		//when
+		//then
+		mockMvc.perform(get("/api/posts/123142124"))
+			.andExpect(status().isNotFound())
+			.andExpect(content().string("Posts에서 ID 123142124를 찾을 수 없습니다."));
+	}
+
+	@Test
 	void 사용자는_게시물을_수정할_수_있다() throws Exception {
 		//given
 		PostUpdateDto postUpdateDto = PostUpdateDto.builder()
