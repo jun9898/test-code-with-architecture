@@ -18,9 +18,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.model.UserStatus;
-import com.example.demo.model.dto.UserCreateDto;
-import com.example.demo.model.dto.UserUpdateDto;
+import com.example.demo.user.domain.UserStatus;
+import com.example.demo.user.domain.UserCreate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -40,7 +39,7 @@ class UserCreateControllerTest {
 	@Test
 	public void 사용자는_내_정보를_등록할_수_있다() throws Exception {
 		//given
-		UserCreateDto userCreateDto = new UserCreateDto("nice1998@gmail.com", "nice1998", "Seoul");
+		UserCreate userCreate = new UserCreate("nice1998@gmail.com", "nice1998", "Seoul");
 		BDDMockito.doNothing().when(mailSender).send(any(SimpleMailMessage.class));
 		//when
 		//then
@@ -48,7 +47,7 @@ class UserCreateControllerTest {
 				post("/api/users")
 					.header("EMAIL", "nice1998@gmail.com")
 					.contentType(MediaType.APPLICATION_JSON)
-					.content(objectMapper.writeValueAsString(userCreateDto)))
+					.content(objectMapper.writeValueAsString(userCreate)))
 			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$.id").value(1))
 			.andExpect(jsonPath("$.email").value("nice1998@gmail.com"))

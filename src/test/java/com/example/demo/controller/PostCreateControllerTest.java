@@ -13,7 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.model.dto.PostCreateDto;
+import com.example.demo.post.domain.PostCreate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -32,7 +32,7 @@ class PostCreateControllerTest {
 	@Test
 	public void 사용자는_게시글을_등록할_수_있다() throws Exception {
 		//given
-		PostCreateDto postCreateDto = PostCreateDto.builder()
+		PostCreate postCreateDto = PostCreate.builder()
 			.content("test content")
 			.writerId(1L)
 			.build();

@@ -1,28 +1,17 @@
 package com.example.demo.service;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import com.example.demo.exception.CertificationCodeNotMatchedException;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.UserStatus;
-import com.example.demo.model.dto.PostCreateDto;
-import com.example.demo.model.dto.PostUpdateDto;
-import com.example.demo.model.dto.UserCreateDto;
-import com.example.demo.model.dto.UserUpdateDto;
-import com.example.demo.repository.PostEntity;
-import com.example.demo.repository.UserEntity;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.post.domain.PostCreate;
+import com.example.demo.post.domain.PostUpdate;
+import com.example.demo.post.infrastructure.PostEntity;
+import com.example.demo.post.service.PostService;
 
 @SpringBootTest
 @SqlGroup({
@@ -48,7 +37,7 @@ class PostServiceTest {
 	@Test
 	void PostCreateDto를_이용하여_게시글을_생성할_수_있다() {
 		//given
-		PostCreateDto postCreateDto = PostCreateDto.builder()
+		PostCreate postCreateDto = PostCreate.builder()
 			.writerId(1L)
 			.content("test")
 			.build();
@@ -64,7 +53,7 @@ class PostServiceTest {
 	@Test
 	void PostUpdateDto를_이용하여_게시글을_수정할_수_있다() {
 		//given
-		PostUpdateDto postUpdateDto = PostUpdateDto.builder()
+		PostUpdate postUpdateDto = PostUpdate.builder()
 			.content("test")
 			.build();
 
