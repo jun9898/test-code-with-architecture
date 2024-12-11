@@ -29,9 +29,6 @@ import com.example.demo.repository.UserRepository;
 class UserServiceTest {
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private UserService userService;
 	// 가짜객체로 설정해줘야함
 	@MockBean
