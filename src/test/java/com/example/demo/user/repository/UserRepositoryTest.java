@@ -3,8 +3,10 @@ package com.example.demo.user.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -14,9 +16,12 @@ import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.infrastructure.UserEntity;
 import com.example.demo.user.service.port.UserRepository;
 
-@DataJpaTest(showSql = true)
-@Sql("/sql/user-repository-test-data.sql")
-@ComponentScan(basePackages = "com.example.demo.user.infrastructure")
+@SpringBootTest
+
+@SqlGroup({
+	@Sql("/sql/user-repository-test-data.sql"),
+	@Sql(value = "/sql/delete-all-data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+})
 class UserRepositoryTest {
 
 	// 이렇게 되면 중간 테스트인 격
