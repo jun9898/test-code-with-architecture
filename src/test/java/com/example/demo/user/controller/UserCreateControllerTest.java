@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.user.controller;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -18,8 +18,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.domain.UserCreate;
+import com.example.demo.user.domain.UserStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
