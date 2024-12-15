@@ -15,7 +15,7 @@ public class MailSenderImpl implements MailSender {
 	private final JavaMailSender javaMailSender;
 
 	@Override
-	public void sendMail(String email, String title, String content) {
+	public void send(String email, String title, String content) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email);
 		message.setSubject(title);

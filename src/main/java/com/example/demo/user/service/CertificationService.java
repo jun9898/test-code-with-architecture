@@ -16,7 +16,7 @@ public class CertificationService {
 		String certificationCode = generateCertificationUrl(userId, certificationUrl);
 		String title = "Please certify your email address";
 		String content = "Please click the following link to certify your email address: " + certificationCode;
-		mailSender.sendMail(email, title, content);
+		mailSender.send(email, title, content);
 	}
 
 	private String generateCertificationUrl(long userId, String certificationUrl) {
