@@ -12,13 +12,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.common.exception.CertificationCodeNotMatchedException;
 import com.example.demo.common.exception.ResourceNotFoundException;
+import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.domain.UserCreate;
 import com.example.demo.user.domain.UserUpdate;
-import com.example.demo.user.infrastructure.UserEntity;
 
 @SpringBootTest
 @SqlGroup({
@@ -39,7 +40,7 @@ class UserServiceTest {
 		String email = "nice1998@gmail.com";
 
 	    //when
-		UserEntity result = userService.getByEmail(email);
+		User result = userService.getByEmail(email);
 
 	    //then
 		assertThat(result.getNickname()).isEqualTo("nice1998");
@@ -61,7 +62,7 @@ class UserServiceTest {
 	void getById는_ACTIVE_상태인_유저를_찾아올_수_있다() {
 		//given
 		//when
-		UserEntity result = userService.getById(1L);
+		User result = userService.getById(1L);
 
 		//then
 		assertThat(result.getStatus()).isEqualTo(UserStatus.ACTIVE);
@@ -88,7 +89,7 @@ class UserServiceTest {
 
 		//when
 		BDDMockito.doNothing().when(mailSender).send(any(SimpleMailMessage.class));
-		UserEntity result = userService.create(userCreate);
+		User result = userService.create(userCreate);
 
 		//then
 		assertThat(result.getId()).isNotNull();
@@ -106,7 +107,7 @@ class UserServiceTest {
 			.build();
 
 		//when
-		UserEntity result = userService.update(1L, userUpdate);
+		User result = userService.update(1L, userUpdate);
 
 		//then
 		assertThat(result.getNickname()).isEqualTo("닉네임 입니다");
@@ -120,9 +121,9 @@ class UserServiceTest {
 		userService.login(1L);
 
 		//then
-		UserEntity userEntity = userService.getById(1L);
+		User User = userService.getById(1L);
 		// TODO: DI와 DIP를 이용해 Holder를 작성, 분리해야할듯함
-		// assertThat(userEntity.getLastLoginAt()).isEqualTo(...);
+		// assertThat(User.getLastLoginAt()).isEqualTo(...);
 	}
 
 	@Test
@@ -132,8 +133,8 @@ class UserServiceTest {
 		userService.verifyEmail(2L, "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
 
 		//then
-		UserEntity userEntity = userService.getById(2L);
-		assertThat(userEntity.getStatus()).isEqualTo(UserStatus.ACTIVE);
+		User User = userService.getById(2L);
+		assertThat(User.getStatus()).isEqualTo(UserStatus.ACTIVE);
 	}
 
 	@Test

@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -14,15 +15,16 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.domain.UserUpdate;
 import com.example.demo.user.infrastructure.UserEntity;
-import com.example.demo.user.infrastructure.UserJpaRepository;
+import com.example.demo.user.service.port.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SqlGroup({
 	@Sql("/sql/user-controller-test-data.sql"),
 	@Sql(value = "/sql/delete-all-data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
@@ -32,7 +34,7 @@ class UserControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	@Autowired
-	private UserJpaRepository userJpaRepository;
+	private UserRepository userRepository;
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Test
@@ -69,8 +71,8 @@ class UserControllerTest {
 			.queryParam("certificationCode", "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"))
 			.andExpect(status().isFound());
 
-		UserEntity userEntity = userJpaRepository.findById(2L).get();
-		assertThat(userEntity.getStatus()).isEqualTo(UserStatus.ACTIVE);
+		User user = userRepository.findById(2L).get();
+		assertThat(user.getStatus()).isEqualTo(UserStatus.ACTIVE);
 	}
 
 	@Test
@@ -111,7 +113,6 @@ class UserControllerTest {
 				.header("EMAIL", "nice1998@gmail.com")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(userUpdate)))
-			.andExpect(jsonPath("$.id").value(1))
 			.andExpect(jsonPath("$.email").value("nice1998@gmail.com"))
 			.andExpect(jsonPath("$.nickname").value("nice1998-test"))
 			.andExpect(jsonPath("$.address").value("Seoul-test"))

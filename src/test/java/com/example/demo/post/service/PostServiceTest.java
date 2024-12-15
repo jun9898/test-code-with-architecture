@@ -8,9 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
+import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostCreate;
 import com.example.demo.post.domain.PostUpdate;
-import com.example.demo.post.infrastructure.PostEntity;
 
 @SpringBootTest
 @SqlGroup({
@@ -26,7 +26,7 @@ class PostServiceTest {
 	void getById는_존재하는_게시글을_가져온다() {
 		//given
 		//when
-		PostEntity result = postService.getPostById(1L);
+		Post result = postService.getPostById(1L);
 
 		//then
 		assertThat(result.getContent()).isEqualTo("helloworld");
@@ -42,7 +42,7 @@ class PostServiceTest {
 			.build();
 
 		//when
-		PostEntity result = postService.create(postCreateDto);
+		Post result = postService.create(postCreateDto);
 
 		//then
 		assertThat(result.getContent()).isEqualTo("test");
@@ -57,7 +57,7 @@ class PostServiceTest {
 			.build();
 
 		//when
-		PostEntity result = postService.update(1L, postUpdateDto);
+		Post result = postService.update(1L, postUpdateDto);
 
 		//then
 		assertThat(result.getContent()).isEqualTo("test");

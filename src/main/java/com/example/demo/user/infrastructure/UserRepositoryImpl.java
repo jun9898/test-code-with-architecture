@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.service.port.UserRepository;
 
@@ -16,22 +17,27 @@ public class UserRepositoryImpl implements UserRepository {
 	private final UserJpaRepository userJpaRepository;
 
 	@Override
-	public Optional<UserEntity> findByIdAndStatus(long id, UserStatus userStatus) {
-		return userJpaRepository.findByIdAndStatus(id, userStatus);
+	public Optional<User> findById(long id) {
+		return userJpaRepository.findById(id).map(UserEntity::toModel);
 	}
 
 	@Override
-	public Optional<UserEntity> findByEmailAndStatus(String email, UserStatus userStatus) {
-		return userJpaRepository.findByEmailAndStatus(email, userStatus);
+	public Optional<User> findByIdAndStatus(long id, UserStatus userStatus) {
+		return userJpaRepository.findByIdAndStatus(id, userStatus).map(UserEntity::toModel);
 	}
 
 	@Override
-	public UserEntity save(UserEntity userEntity) {
-		return userJpaRepository.save(userEntity);
+	public Optional<User> findByEmailAndStatus(String email, UserStatus userStatus) {
+		return userJpaRepository.findByEmailAndStatus(email, userStatus).map(UserEntity::toModel);
 	}
 
 	@Override
-	public Optional<UserEntity> findById(long id) {
-		return userJpaRepository.findById(id);
+	public User save(User user) {
+		System.out.println("UserRepositoryImpl.save");
+		System.out.println("save user.id = " + user.getId());
+		User model = userJpaRepository.save(UserEntity.fromModel(user)).toModel();
+		System.out.println("save model.id = " + model.getId());
+		return model;
 	}
+
 }

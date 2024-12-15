@@ -1,5 +1,6 @@
 package com.example.demo.user.infrastructure;
 
+import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +16,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -44,13 +44,27 @@ public class UserEntity {
     @Column(name = "last_login_at")
     private Long lastLoginAt;
 
-    @Builder
-    public UserEntity(String email, String nickname, String address, String certificationCode, UserStatus status, Long lastLoginAt) {
-        this.email = email;
-        this.nickname = nickname;
-        this.address = address;
-        this.certificationCode = certificationCode;
-        this.status = status;
-        this.lastLoginAt = lastLoginAt;
+    public User toModel() {
+        return User.builder()
+            .id(id)
+            .email(email)
+            .nickname(nickname)
+            .address(address)
+            .certificationCode(certificationCode)
+            .status(status)
+            .lastLoginAt(lastLoginAt)
+            .build();
+    }
+
+    public static UserEntity fromModel(User user) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.id = user.getId();
+        userEntity.email = user.getEmail();
+        userEntity.nickname = user.getNickname();
+        userEntity.address = user.getAddress();
+        userEntity.certificationCode = user.getCertificationCode();
+        userEntity.status = user.getStatus();
+        userEntity.lastLoginAt = user.getLastLoginAt();
+        return userEntity;
     }
 }
