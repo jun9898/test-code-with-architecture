@@ -2,6 +2,7 @@ package com.example.demo.post.domain;
 
 import java.time.Clock;
 
+import com.example.demo.common.service.port.ClockHolder;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.infrastructure.UserEntity;
 
@@ -25,20 +26,20 @@ public class Post {
 		this.writer = writer;
 	}
 
-	public static Post from(User writer, PostCreate postCreate) {
+	public static Post from(User writer, PostCreate postCreate, ClockHolder clockHolder) {
 		return Post.builder()
 			.content(postCreate.getContent())
-			.createdAt(Clock.systemUTC().millis())
+			.createdAt(clockHolder.millis())
 			.writer(writer)
 			.build();
 	}
 
-	public Post update(PostUpdate postUpdate) {
+	public Post update(PostUpdate postUpdate, ClockHolder clockHolder) {
 		return Post.builder()
 			.id(this.id)
 			.content(postUpdate.getContent())
 			.createdAt(this.createdAt)
-			.modifiedAt(Clock.systemUTC().millis())
+			.modifiedAt(clockHolder.millis())
 			.writer(this.writer)
 			.build();
 

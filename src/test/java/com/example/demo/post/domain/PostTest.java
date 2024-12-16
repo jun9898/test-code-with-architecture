@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.example.demo.common.service.port.ClockHolder;
+import com.example.demo.mock.TestClockHolder;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 
@@ -12,6 +14,8 @@ class PostTest {
 	@Test
 	public void PostCreate으로_게시물을_만들_수_있다() {
 		// given
+		ClockHolder clockHolder = new TestClockHolder(100L);
+
 		PostCreate postCreate = PostCreate.builder()
 			.writerId(1L)
 			.content("helloworld")
@@ -26,7 +30,7 @@ class PostTest {
 			.build();
 
 		// when
-		Post post = Post.from(writer, postCreate);
+		Post post = Post.from(writer, postCreate, clockHolder);
 
 		// then
 		assertThat(post.getContent()).isEqualTo("helloworld");
@@ -41,6 +45,8 @@ class PostTest {
 	@Test
 	public void PostUpdate로_게시물을_수정할_수_있다() {
 		// given
+		ClockHolder clockHolder = new TestClockHolder(100L);
+
 		PostCreate postCreate = PostCreate.builder()
 			.writerId(1L)
 			.content("helloworld")
@@ -54,14 +60,14 @@ class PostTest {
 			.certificationCode("aaaaa-aaaaa-aaaaa-aaaaa-aaaaa")
 			.build();
 
-		Post from = Post.from(writer, postCreate);
+		Post from = Post.from(writer, postCreate, clockHolder);
 
 		PostUpdate postUpdate = PostUpdate.builder()
 			.content("hello")
 			.build();
 
 		// when
-		Post update = from.update(postUpdate);
+		Post update = from.update(postUpdate, clockHolder);
 
 		// then
 		assertThat(update.getContent()).isEqualTo("hello");
