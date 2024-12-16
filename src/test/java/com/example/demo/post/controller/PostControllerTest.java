@@ -1,20 +1,10 @@
 package com.example.demo.post.controller;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.common.exception.ResourceNotFoundException;
 import com.example.demo.mock.TestContainer;
@@ -23,7 +13,6 @@ import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostUpdate;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 class PostControllerTest {
 
@@ -54,7 +43,7 @@ class PostControllerTest {
 			.build());
 
 		//when
-		ResponseEntity<PostResponse> postById = testContainer.postController.getPostById(1L);
+		ResponseEntity<PostResponse> postById = testContainer.postController.getById(1L);
 
 		//then
 		assertThat(postById.getStatusCode().value()).isEqualTo(HttpStatusCode.valueOf(200).value());
@@ -78,7 +67,7 @@ class PostControllerTest {
 		//when
 		//then
 		assertThatThrownBy(() -> testContainer.postController
-			.getPostById(1L))
+			.getById(1L))
 			.isInstanceOf(ResourceNotFoundException.class);
 	}
 
@@ -113,7 +102,7 @@ class PostControllerTest {
 			.build();
 
 		//when
-		ResponseEntity<PostResponse> result = testContainer.postController.updatePost(1L,
+		ResponseEntity<PostResponse> result = testContainer.postController.update(1L,
 			postUpdateDto);
 
 		//then

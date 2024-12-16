@@ -22,7 +22,7 @@ class UserCreateControllerTest {
 			.build();
 
 		//when
-		ResponseEntity<UserResponse> result = container.userCreateController.createUser(UserCreate.builder()
+		ResponseEntity<UserResponse> result = container.userCreateController.create(UserCreate.builder()
 			.nickname("nice1998")
 			.address("Seoul")
 			.email("nice1998@gmail.com")

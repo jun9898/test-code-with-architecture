@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.example.demo.common.exception.CertificationCodeNotMatchedException;
 import com.example.demo.common.exception.ResourceNotFoundException;
-import com.example.demo.mock.TestClockHolder;
 import com.example.demo.mock.TestContainer;
 import com.example.demo.user.controller.response.MyProfileResponse;
 import com.example.demo.user.controller.response.UserResponse;
@@ -34,7 +33,7 @@ class UserControllerTest {
 
 		//when
 		ResponseEntity<UserResponse> result = testContainer.userController
-			.getUserById(1);
+			.getById(1);
 
 		//then
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
@@ -53,7 +52,7 @@ class UserControllerTest {
 		//when
 		//then
 		assertThatThrownBy(() -> testContainer.userController
-			.getUserById(1)).isInstanceOf(ResourceNotFoundException.class);
+			.getById(1)).isInstanceOf(ResourceNotFoundException.class);
 	}
 
 	@Test

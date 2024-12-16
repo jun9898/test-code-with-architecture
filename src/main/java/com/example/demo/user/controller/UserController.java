@@ -37,7 +37,7 @@ public class UserController {
 
     @ResponseStatus
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable long id) {
+    public ResponseEntity<UserResponse> getById(@PathVariable long id) {
         return ResponseEntity
             .ok()
             .body(UserResponse.from(userService.getById(id)));
@@ -53,6 +53,8 @@ public class UserController {
             .build();
     }
 
+    // 반환 타입이 다르다면 책임이 다르다는 뜻으로 해석할 수 있다.
+    // 지금은 책임이 과해 작성하지 않지만 프로젝트 규모가 커진다면 이렇게 분리하는 것이 좋다.
     @GetMapping("/me")
     public ResponseEntity<MyProfileResponse> getMyInfo(
         @Parameter(name = "EMAIL", in = ParameterIn.HEADER)
