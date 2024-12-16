@@ -4,6 +4,8 @@ import java.time.Clock;
 import java.util.UUID;
 
 import com.example.demo.common.exception.CertificationCodeNotMatchedException;
+import com.example.demo.common.service.port.ClockHolder;
+import com.example.demo.common.service.port.UUidHolder;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -31,13 +33,13 @@ public class User {
 		this.lastLoginAt = lastLoginAt;
 	}
 
-	public static User from(UserCreate userCreate) {
+	public static User from(UserCreate userCreate, UUidHolder uuidHolder) {
 		return User.builder()
 			.address(userCreate.getAddress())
 			.email(userCreate.getEmail())
 			.status(UserStatus.PENDING)
 			.nickname(userCreate.getNickname())
-			.certificationCode(UUID.randomUUID().toString())
+			.certificationCode(uuidHolder.random())
 			.build();
 	}
 
@@ -52,7 +54,7 @@ public class User {
 			.build();
 	}
 
-	public User login() {
+	public User login(ClockHolder clockHolder) {
 		return User.builder()
 			.id(this.id)
 			.email(this.email)
@@ -60,7 +62,7 @@ public class User {
 			.address(this.address)
 			.nickname(this.nickname)
 			.certificationCode(this.certificationCode)
-			.lastLoginAt(Clock.systemUTC().millis())
+			.lastLoginAt(clockHolder.millis())
 			.build();
 	}
 

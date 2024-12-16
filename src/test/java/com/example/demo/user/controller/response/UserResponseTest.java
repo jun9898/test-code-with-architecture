@@ -1,18 +1,34 @@
 package com.example.demo.user.controller.response;
 
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import com.example.demo.user.domain.User;
+import com.example.demo.user.domain.UserStatus;
 
 class UserResponseTest {
 
 	@Test
 	public void User으로_응답을_생성할_수_있다() throws Exception {
-	    //given
+		//given
+		User user = User.builder()
+			.address("Seoul")
+			.email("nice1998@gmail.com")
+			.status(UserStatus.ACTIVE)
+			.nickname("nice1998")
+			.lastLoginAt(100L)
+			.certificationCode("aaaaa-aaaaa-aaaaa-aaaaa-aaaaa")
+			.build();
 
-	    //when
+		//when
+		UserResponse myProfileResponse = UserResponse.from(user);
 
-	    //then
-
+		//then
+		assertThat(myProfileResponse.getEmail()).isEqualTo("nice1998@gmail.com");
+		assertThat(myProfileResponse.getNickname()).isEqualTo("nice1998");
+		assertThat(myProfileResponse.getStatus()).isEqualTo(UserStatus.ACTIVE);
+		assertThat(myProfileResponse.getLastLoginAt()).isEqualTo(100L);
 	}
 }
