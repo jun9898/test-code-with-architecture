@@ -40,6 +40,7 @@ public class User {
 			.status(UserStatus.PENDING)
 			.nickname(userCreate.getNickname())
 			.certificationCode(uuidHolder.random())
+			.lastLoginAt(0L)
 			.build();
 	}
 
@@ -50,6 +51,7 @@ public class User {
 			.status(this.status)
 			.address(userUpdate.getAddress())
 			.nickname(userUpdate.getNickname())
+			.lastLoginAt(this.lastLoginAt)
 			.certificationCode(this.certificationCode)
 			.build();
 	}

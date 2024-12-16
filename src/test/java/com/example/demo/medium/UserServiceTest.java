@@ -19,7 +19,7 @@ import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.domain.UserCreate;
 import com.example.demo.user.domain.UserUpdate;
-import com.example.demo.user.service.UserService;
+import com.example.demo.user.service.UserServiceImpl;
 
 @SpringBootTest
 @SqlGroup({
@@ -29,7 +29,7 @@ import com.example.demo.user.service.UserService;
 class UserServiceTest {
 
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 	// 가짜객체로 설정해줘야함
 	@MockBean
 	private JavaMailSender mailSender;

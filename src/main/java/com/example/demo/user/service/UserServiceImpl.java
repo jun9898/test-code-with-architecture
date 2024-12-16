@@ -1,14 +1,12 @@
 package com.example.demo.user.service;
 
-import java.time.Clock;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.common.exception.CertificationCodeNotMatchedException;
 import com.example.demo.common.exception.ResourceNotFoundException;
 import com.example.demo.common.service.port.ClockHolder;
 import com.example.demo.common.service.port.UUidHolder;
+import com.example.demo.user.controller.port.UserService;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserCreate;
 import com.example.demo.user.domain.UserStatus;
@@ -21,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Builder
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final CertificationService certificationService;

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.common.exception.ResourceNotFoundException;
 import com.example.demo.common.service.port.ClockHolder;
+import com.example.demo.post.controller.port.PostService;
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostCreate;
 import com.example.demo.post.domain.PostUpdate;
@@ -17,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Builder
 @RequiredArgsConstructor
-public class PostService {
+public class PostServiceImpl implements PostService {
 
     private final ClockHolder clockHolder;
     private final PostRepository postRepository;

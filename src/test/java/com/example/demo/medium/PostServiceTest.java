@@ -11,7 +11,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostCreate;
 import com.example.demo.post.domain.PostUpdate;
-import com.example.demo.post.service.PostService;
+import com.example.demo.post.service.PostServiceImpl;
 
 @SpringBootTest
 @SqlGroup({
@@ -21,7 +21,7 @@ import com.example.demo.post.service.PostService;
 class PostServiceTest {
 
 	@Autowired
-	private PostService postService;
+	private PostServiceImpl postService;
 
 	@Test
 	void getById는_존재하는_게시글을_가져온다() {
