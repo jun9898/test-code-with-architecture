@@ -1,4 +1,4 @@
-package com.example.demo.post.service;
+package com.example.demo.medium;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -11,6 +11,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostCreate;
 import com.example.demo.post.domain.PostUpdate;
+import com.example.demo.post.service.PostService;
 
 @SpringBootTest
 @SqlGroup({

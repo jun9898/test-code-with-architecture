@@ -1,4 +1,4 @@
-package com.example.demo.user.repository;
+package com.example.demo.medium;
 
 import static org.assertj.core.api.Assertions.*;
 
